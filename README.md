@@ -1,2 +1,2 @@
-# weddingbarcode_apps
-Aplikasi Pemindaian QR Code Kehadiran Pernikahan
+# qrcode_checkin
+Aplikasi Kehadiran Acara berbasis scan QR Code
