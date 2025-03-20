@@ -11,10 +11,10 @@
         <script src="https://kit.fontawesome.com/ee5974d453.js" crossorigin="anonymous"></script>
     </head>
     <body>
-        <div class="container border border-1">
+        <div class="container">
             <h1 class="text-center p-2 mb-3">Absensi Kehadiran Tamu Acara</h1>
             <div class="row justify-content-evenly">
-                <div class="col-5 border border-1">
+                <div class="col-5">
                     <div class="input-group mb-3">
                         <input type="search" class="form-control" placeholder="Cari Tamu Acara"
                             aria-label="Cari Tamu Acara" aria-describedby="button-addon2">
@@ -24,22 +24,61 @@
                         </button>
                     </div>
                     <div class="card">
-                        <div class="row g-0">
-                            <div class="col-md-4">
+                        <div class="row g-0 p-2 align-items-center">
+                            <div class="col-md-4 text-center">
                                 <img src="assets/tamu-img.jpg" class="img-fluid rounded-start" alt="image">
+                                <button type="button" class="btn btn-success">Check In</button>
                             </div>
                             <div class="col-md-8">
                                 <div class="card-body">
-                                    <h5 class="card-title">Card title</h5>
-                                    <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                                    <p class="card-text"><small class="text-body-secondary">Last updated 3 mins ago</small></p>
+                                    <h5 class="card-title">Nama Tamu</h5>
+                                    <p class="card-text">
+                                        <ul class="list-group">
+                                            <li class="list-group-item">Malang</li>
+                                            <li class="list-group-item">085812408380</li>
+                                        </ul>
+                                    </p>
+                                    <p class="card-text">
+                                        <i class="text-danger fw-bold">Belum Hadir</i>/
+                                        <i class="text-success fw-bold">Sudah Hadir</i>
+                                    </p>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="col-5 border border-1">
-                    One of two columns
+                    <table class="table">
+                        <h4>Data Tamu Undangan</h4>
+                        <hr class="m-0">
+                        <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">First</th>
+                                <th scope="col">Last</th>
+                                <th scope="col">Handle</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th scope="row">1</th>
+                                <td>Mark</td>
+                                <td>Otto</td>
+                                <td>@mdo</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">2</th>
+                                <td>Jacob</td>
+                                <td>Thornton</td>
+                                <td>@fat</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">3</th>
+                                <td colspan="2">Larry the Bird</td>
+                                <td>@twitter</td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
