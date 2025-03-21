@@ -12,175 +12,129 @@
     </head>
     <body>
         <div class="container p-3">
-            <div class="row justify-content-evenly">
-                <div class="col-5">
-                    <div class="input-group mb-3">
-                        <input type="search" class="form-control" placeholder="Cari Tamu Acara"
-                            aria-label="Cari Tamu Acara" aria-describedby="button-addon2">
-                        <button class="btn btn-outline-success" type="button" id="button-addon2">
-                            <i class="fa-solid fa-magnifying-glass"></i>
-                            <span class="p-1">Cari Tamu</span>
-                        </button>
-                    </div>
-                    <div class="card mb-4">
-                        <div class="row g-0 p-2 align-items-center">
-                            <div class="col-md-4 text-center">
-                                <img src="assets/tamu-img.jpg" class="img-fluid rounded-start" alt="image">
-                                <button type="button" class="btn btn-success">
-                                    <i class="fa-solid fa-user-check"></i>
-                                    <span>Check In</span>
-                                </button>
-                            </div>
-                            <div class="col-md-8">
-                                <div class="card-body">
-                                    <h5 class="card-title">Nama Tamu</h5>
-                                    <p class="card-text">
-                                        <ul class="list-group">
-                                            <li class="list-group-item">Malang</li>
-                                            <li class="list-group-item">085812408380</li>
-                                        </ul>
-                                    </p>
-                                    <p class="card-text">
-                                        <i class="text-danger fw-bold">Belum Hadir</i>/
-                                        <i class="text-success fw-bold">Sudah Hadir</i>
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <table class="table">
-                        <h5>Tamu yang telah Check In</h4>
-                        <hr class="m-0">
-                        <thead>
-                            <tr>
-                                <th scope="col">#</th>
-                                <th scope="col">Nama Tamu</th>
-                                <th scope="col">Asal</th>
-                                <th scope="col">Telp/HP</th>
-                                <th scope="col">Kehadiran</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php
-                            // Database connection
-                            include 'inc/connection.php';
-
-                            // Fetch data of guests who have already checked in
-                            $sql = "SELECT id, nama_tamu, asal, no_telp FROM data_tamu WHERE kehadiran = 'Sudah Hadir'";
-                            $result = $conn->query($sql);
-
-                            if ($result->num_rows > 0) {
-                                $no = 1;
-                                while ($row = $result->fetch_assoc()) {
-                            ?>
-                                <tr>
-                                    <th scope="row"><?php echo $no++; ?></th>
-                                    <td><?php echo htmlspecialchars($row['nama_tamu']) ?></td>
-                                    <td><?php echo htmlspecialchars($row['asal']) ?></td>
-                                    <td><?php echo htmlspecialchars($row['no_telp']) ?></td>
-                                    <td>
-                                        <i class="text-success fw-bold">Sudah Hadir</i>
-                                    </td>
-                                </tr>
-                            <?php
-                                }
-                            } else {
-                                echo "<tr><td colspan='5' class='text-center'>Tidak ada tamu yang sudah hadir</td></tr>";
-                            }
-
-                            $conn->close();
-                            ?>
-                        </tbody>
-                    </table>
-                </div>
-                <div class="col-5">
-                </div>
-            </div>
-        </div>
-        <div class="container">
             <?php
                 // Database connection
                 include 'inc/connection.php';
 
                 // Pagination setup
-                $limit = 5; // Number of records per page
+                $limit = 5;
                 $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
                 $start = ($page > 1) ? ($page * $limit) - $limit : 0;
 
                 // Search functionality
-                $search = isset($_GET['search']) ? $_GET['search'] : '';
-                $searchQuery = $search ? "WHERE nama_tamu LIKE '%$search%' OR asal LIKE '%$search%' OR no_telp LIKE '%$search%'" : '';
+                $search = isset($_GET['search']) ? $conn->real_escape_string($_GET['search']) : '';
+                $whereClause = $search ? "WHERE nama_tamu LIKE '%$search%'" : '';
 
-                // Fetch data with pagination
-                $sql = "SELECT SQL_CALC_FOUND_ROWS id, nama_tamu, asal, no_telp, kehadiran FROM data_tamu $searchQuery LIMIT $start, $limit";
+                // Fetch data
+                $sql = "SELECT * FROM data_tamu $whereClause LIMIT $start, $limit";
                 $result = $conn->query($sql);
 
-                // Get total records
-                $totalResult = $conn->query("SELECT FOUND_ROWS() as total");
+                // Count total rows for pagination
+                $totalResult = $conn->query("SELECT COUNT(*) AS total FROM data_tamu $whereClause");
                 $totalRows = $totalResult->fetch_assoc()['total'];
                 $totalPages = ceil($totalRows / $limit);
             ?>
-            <div class="row">
-                <div class="col-12">
-                    <form method="GET" class="mb-3">
-                        <div class="input-group">
-                            <input type="search" name="search" class="form-control" placeholder="Cari Data Tamu"
-                                value="<?php echo htmlspecialchars($search); ?>">
-                            <button class="btn btn-outline-success" type="submit">
-                                <i class="fa-solid fa-magnifying-glass"></i>
-                                <span>Cari</span>
-                            </button>
+
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="m-0">Check In Kehadiran Tamu</h3>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-4">
+                            <div class="card mb-3">
+                                <div class="row align-items-center g-0">
+                                    <div class="col-md-4">
+                                        <img src="assets/tamu-img.jpg" class="img-fluid rounded-start" alt="image">
+                                    </div>
+                                    <div class="col-md-8">
+                                        <div class="card-body">
+                                            <h5 class="card-title">Nama Tamu</h5>
+                                            <p class="card-text">
+                                                <ul class="list-group">
+                                                    <li class="list-group-item">Malang</li>
+                                                    <li class="list-group-item">123456789</li>
+                                                </ul>
+                                            </p>
+                                            <button type="button" class="btn btn-outline-success">
+                                                <i class="fa-solid fa-user-check"></i>
+                                                <span>Check In</span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                    </form>
-                    <table class="table table-bordered">
-                        <thead>
-                            <tr>
-                                <th>#</th>
-                                <th>Nama Tamu</th>
-                                <th>Asal</th>
-                                <th>Telp/HP</th>
-                                <th>Kehadiran</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php
-                            if ($result->num_rows > 0) {
-                                $no = $start + 1;
-                                while ($row = $result->fetch_assoc()) {
-                            ?>
-                                <tr>
-                                    <td><?php echo $no++; ?></td>
-                                    <td><?php echo htmlspecialchars($row['nama_tamu']); ?></td>
-                                    <td><?php echo htmlspecialchars($row['asal']); ?></td>
-                                    <td><?php echo htmlspecialchars($row['no_telp']); ?></td>
-                                    <td>
-                                        <i class="<?php echo $row['kehadiran'] == 'Sudah Hadir' ? 'text-success' : 'text-danger'; ?> fw-bold">
-                                            <?php echo htmlspecialchars($row['kehadiran']); ?>
-                                        </i>
-                                    </td>
-                                </tr>
-                            <?php
-                                }
-                            } else {
-                                echo "<tr><td colspan='5' class='text-center'>Tidak ada data tamu</td></tr>";
-                            }
-                            ?>
-                        </tbody>
-                    </table>
-                    <nav>
-                        <ul class="pagination justify-content-center">
-                            <?php for ($i = 1; $i <= $totalPages; $i++) { ?>
-                                <li class="page-item <?php echo $i == $page ? 'active' : ''; ?>">
-                                    <a class="page-link" href="?page=<?php echo $i; ?>&search=<?php echo urlencode($search); ?>">
-                                        <?php echo $i; ?>
-                                    </a>
-                                </li>
-                            <?php } ?>
-                        </ul>
-                    </nav>
+                        <div class="col-8">
+                            <form method="GET" class="d-flex" autocomplete="off">
+                                <input type="search" name="search" class="form-control me-2" placeholder="Cari Tamu" value="<?= htmlspecialchars($search) ?>">
+                                <a href="index.php" class="btn btn-primary w-25 ms-2">
+                                    <i class="fa-solid fa-list me-1"></i>
+                                    <span>Data Master</span>
+                                </a>
+                            </form>
+                            <table class="table table-bordered mt-3">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Nama</th>
+                                        <th>Asal</th>
+                                        <th>Telp/Hp</th>
+                                        <th>Kehadiran</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php if ($result->num_rows > 0): ?>
+                                        <?php $no = $start + 1; ?>
+                                        <?php while ($row = $result->fetch_assoc()): ?>
+                                            <tr>
+                                                <td><?= $no++ ?></td>
+                                                <td><?= htmlspecialchars($row['nama_tamu']) ?></td>
+                                                <td><?= htmlspecialchars($row['asal']) ?></td>
+                                                <td><?= htmlspecialchars($row['no_telp']) ?></td>
+                                                <td>
+                                                    <?php
+                                                        if(htmlspecialchars($row['kehadiran']) == 'Sudah Hadir'){
+                                                    ?>
+                                                        <span class="text-success fw-bold">
+                                                            <?= htmlspecialchars($row['kehadiran']) ?>
+                                                        </span>
+                                                    <?php
+                                                        } else {
+                                                    ?>
+                                                        <span class="text-danger fw-bold">
+                                                            <?= htmlspecialchars($row['kehadiran']) ?>
+                                                        </span>
+                                                    <?php
+                                                        }
+                                                    ?>
+                                                </td>
+                                            </tr>
+                                        <?php endwhile; ?>
+                                    <?php else: ?>
+                                        <tr>
+                                            <td colspan="5" class="text-center">Tidak ada data</td>
+                                        </tr>
+                                    <?php endif; ?>
+                                </tbody>
+                            </table>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <p class="card-text fs-5 m-0">
+                                    Total Data Tamu Undangan: <?= $totalRows ?>
+                                </p>
+                                <ul class="pagination align-items-center m-0">
+                                    <span class="me-3">Paginasi</span>
+                                    <?php for ($i = 1; $i <= $totalPages; $i++): ?>
+                                        <li class="page-item <?= ($i == $page) ? 'active' : '' ?>">
+                                            <a class="page-link" href="?page=<?= $i ?>&search=<?= urlencode($search) ?>"><?= $i ?></a>
+                                        </li>
+                                    <?php endfor; ?>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <?php $conn->close(); ?>
         </div>
         <!-- JS CORE -->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
