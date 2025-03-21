@@ -1,9 +1,9 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.1
+-- version 5.2.2
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 21, 2025 at 08:50 AM
+-- Generation Time: Mar 21, 2025 at 11:30 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -44,7 +44,9 @@ INSERT INTO `data_tamu` (`id`, `nama_tamu`, `asal`, `no_telp`, `kehadiran`, `qrc
 (1, 'Dimas', 'Malang', 123456789, 'Sudah Hadir', ''),
 (2, 'Agil', 'Kediri', 123456789, 'Belum Hadir', ''),
 (3, 'Satrio', 'Surabaya', 123456789, 'Sudah Hadir', ''),
-(4, 'Wibowo', 'Makassar', 123456789, 'Belum Hadir', '');
+(4, 'Wibowo', 'Makassar', 123456789, 'Belum Hadir', ''),
+(5, 'Dedan', 'Pakis', 123456789, 'Sudah Hadir', ''),
+(6, 'Thomas', 'Gadang', 123456789, 'Sudah Hadir', '');
 
 --
 -- Indexes for dumped tables
@@ -64,7 +66,7 @@ ALTER TABLE `data_tamu`
 -- AUTO_INCREMENT for table `data_tamu`
 --
 ALTER TABLE `data_tamu`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
