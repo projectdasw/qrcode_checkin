@@ -36,8 +36,12 @@
             ?>
 
             <div class="card">
-                <div class="card-header">
+                <div class="card-header d-flex justify-content-between align-items-center">
                     <h3 class="m-0">Check In Kehadiran Tamu</h3>
+                    <p class="text-body-secondary m-0">
+                        Developed by
+                        <a class="text-decoration-none text-dark" href="">DASW Project</a>
+                    </p>
                 </div>
                 <div class="card-body">
                     <div class="row">
@@ -66,12 +70,20 @@
                             </div>
                         </div>
                         <div class="col-8">
-                            <form method="GET" class="d-flex" autocomplete="off">
-                                <input type="search" name="search" class="form-control me-2" placeholder="Cari Tamu" value="<?= htmlspecialchars($search) ?>">
-                                <a href="index.php" class="btn btn-primary w-25 ms-2">
-                                    <i class="fa-solid fa-list me-1"></i>
-                                    <span>Data Master</span>
-                                </a>
+                            <form method="GET" class="d-flex justify-content-end" autocomplete="off">
+                                <input type="search" name="search" class="form-control w-50 me-2"
+                                    placeholder="Cari Tamu" value="<?= htmlspecialchars($search) ?>">
+                                <div class="btn-group btn-group-sm" role="group" aria-label="Basic outlined example">
+                                    <button type="submit" class="btn btn-outline-success">
+                                        <i class="fa-solid fa-search"></i>
+                                        <span>Cari</span>
+                                    </button>
+                                    <button type="button" class="btn btn-outline-primary"
+                                        onclick="window.location.href='index.php'">
+                                        <i class="fa-solid fa-list me-1"></i>
+                                        <span>Data Master</span>
+                                    </button>
+                                </div>
                             </form>
                             <table class="table table-bordered mt-3">
                                 <thead>
@@ -96,15 +108,15 @@
                                                     <?php
                                                         if(htmlspecialchars($row['kehadiran']) == 'Sudah Hadir'){
                                                     ?>
-                                                        <span class="text-success fw-bold">
+                                                        <i class="text-success fw-bold">
                                                             <?= htmlspecialchars($row['kehadiran']) ?>
-                                                        </span>
+                                                        </i>
                                                     <?php
                                                         } else {
                                                     ?>
-                                                        <span class="text-danger fw-bold">
+                                                        <i class="text-danger fw-bold">
                                                             <?= htmlspecialchars($row['kehadiran']) ?>
-                                                        </span>
+                                                        </i>
                                                     <?php
                                                         }
                                                     ?>
@@ -120,7 +132,7 @@
                             </table>
                             <div class="d-flex justify-content-between align-items-center">
                                 <p class="card-text fs-5 m-0">
-                                    Total Data Tamu Undangan: <?= $totalRows ?>
+                                    Data Tamu Undangan: <?= $totalRows ?>
                                 </p>
                                 <ul class="pagination align-items-center m-0">
                                     <span class="me-3">Paginasi</span>
