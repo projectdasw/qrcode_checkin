@@ -3,7 +3,7 @@
 $host = 'localhost';
 $username = 'root';
 $password = '';
-$database = 'checkin_db';
+$database = 'checkin_db_trial';
 
 // Create connection
 $conn = new mysqli($host, $username, $password, $database);

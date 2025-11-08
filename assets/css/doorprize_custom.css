@@ -1,0 +1,12 @@
+body{
+    background-image: url('../doorprize-bg.webp');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-attachment: fixed;
+}
+
+.slot-box {
+    font-size: 75px;
+    font-weight: 500;
+}
